@@ -1210,76 +1210,169 @@ document.getElementById('addProject').addEventListener('click', function() {
 });
 
 
-
-function downloadPortfolio(studentId, portfolioData) {
-    const fileName = `${studentId}.html`; // Set the file name using student_id
-    const blob = new Blob([portfolioData], { type: 'text/html' });
+// Function to handle the download for each student
+function downloadPortfolio(studentId, portfolioHTML) {
+    const fileName = `portfolio_${studentId}.html`; 
+    const blob = new Blob([portfolioHTML], { type: 'text/html' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = fileName; // Use the fileName variable
+    link.download = fileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
 
-// Function to handle the download for each student
-function handleDownload(student) {
-    const studentId = student.student_id;
-    const portfolioData = generatePortfolioHTML(student); // Assuming you have a function to generate HTML
-    downloadPortfolio(studentId, portfolioData);
-}
-
-function updateProgressTracker() {
-    const sections = document.querySelectorAll('.form-section');
-    
-    const progressSteps = document.querySelectorAll('.progress-step');
-    
-    function isSectionComplete(section) {
-        const inputs = section.querySelectorAll('input, textarea');
-        return Array.from(inputs).every(input => input.value.trim() !== '');
-    }
-    
-    progressSteps.forEach(step => {
-        step.classList.remove('active', 'completed');
-    });
-    
-    let activeIndex = 0;
-    for (let i = 0; i < sections.length; i++) {
-        if (isSectionComplete(sections[i])) {
-            progressSteps[i].classList.add('completed');
-            activeIndex = i + 1;
-        } else {
-            break;
+// Add some enhancements to the main UI
+document.addEventListener('DOMContentLoaded', function() {
+    // Add animated background to header
+    const header = document.querySelector('.header');
+    if (header) {
+        const particles = document.createElement('div');
+        particles.classList.add('particles');
+        header.appendChild(particles);
+        
+        // Create animated particles
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particle.style.width = `${Math.random() * 20 + 5}px`;
+            particle.style.height = particle.style.width;
+            particles.appendChild(particle);
         }
     }
     
-    if (activeIndex >= progressSteps.length) {
-        activeIndex = progressSteps.length - 1;
-    }
-    progressSteps[activeIndex].classList.add('active');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    const formInputs = document.querySelectorAll('#portfolioForm input, #portfolioForm textarea');
-    
-    formInputs.forEach(input => {
-        input.addEventListener('blur', updateProgressTracker);
-    });
-    
-    updateProgressTracker();
-    
-    const progressSteps = document.querySelectorAll('.progress-step');
-    progressSteps.forEach((step, index) => {
-        step.addEventListener('click', function() {
-            const sections = document.querySelectorAll('.form-section');
-            if (index < sections.length) {
-                sections[index].scrollIntoView({ behavior: 'smooth' });
-                
-                const firstInput = sections[index].querySelector('input, textarea');
-                if (firstInput) {
-                    setTimeout(() => firstInput.focus(), 500);
-                }
+    // Add styling for form elements
+    const formStyle = document.createElement('style');
+    formStyle.textContent = `
+        .form-container {
+            position: relative;
+            z-index: 10;
+        }
+        
+        .form-section h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(84, 81, 254, 0.15);
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(84, 81, 254, 0.3);
+        }
+        
+        .project-entry {
+            background-color: #f8faff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #eaecf5;
+            transition: all 0.3s ease;
+        }
+        
+        .project-entry:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-color: #d9dfff;
+        }
+        
+        .nav-tabs .nav-link {
+            color: var(--text-color);
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            background-color: transparent;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .nav-tabs .nav-link:hover:not(.active) {
+            border-color: transparent transparent #d9dfff transparent;
+        }
+        
+        .header {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
             }
-        });
-    });
+            25% {
+                opacity: 0.8;
+            }
+            75% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #34c759, #28a745);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .preview-container {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid #eaecf5;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+    `;
+    document.head.appendChild(formStyle);
 });
+
