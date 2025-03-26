@@ -18,6 +18,7 @@ document.getElementById('jsonUploadForm').addEventListener('submit', function(e)
 
                     alert('Portfolios generated successfully!');
 
+                    // Download link logic (unchanged)
                     const downloadLink = document.createElement('a');
                     downloadLink.href = '#';
                     downloadLink.textContent = 'Download Portfolios';
@@ -30,7 +31,7 @@ document.getElementById('jsonUploadForm').addEventListener('submit', function(e)
                             const fileName = `portfolio_${studentId}.html`;
                             zip.file(fileName, portfolio.html);
                         });
-                        zip.generateAsync({type: 'blob'})
+                        zip.generateAsync({ type: 'blob' })
                             .then(content => {
                                 const link = document.createElement('a');
                                 link.href = URL.createObjectURL(content);
@@ -40,14 +41,26 @@ document.getElementById('jsonUploadForm').addEventListener('submit', function(e)
                     });
                     document.getElementById('jsonUploadForm').appendChild(downloadLink);
 
+                    // Enhanced Preview Section
                     if (portfolios.length > 0) {
                         const previewContainer = document.createElement('div');
+                        previewContainer.classList.add('preview-container', 'mt-4');
+
+                        // Create an iframe for proper rendering
+                        const iframe = document.createElement('iframe');
+                        iframe.style.width = '100%';
+                        iframe.style.height = '500px'; // Adjust height as needed
+                        iframe.style.border = 'none';
+
+                        // Write the full HTML to the iframe
+                        const previewHTML = portfolios[0].html;
+                        iframe.srcdoc = previewHTML;
+
                         previewContainer.innerHTML = `
                             <h3 class="mt-4">Preview of First Portfolio</h3>
-                            <div class="preview-container border rounded p-3 mt-2">
-                                ${portfolios[0].html}
-                            </div>
                         `;
+                        previewContainer.appendChild(iframe);
+
                         document.getElementById('jsonUploadForm').appendChild(previewContainer);
                     }
                 } else {
