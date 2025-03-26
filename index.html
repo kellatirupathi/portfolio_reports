@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Template Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --border-color: #e9ecef;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 1140px;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+        }
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        .form-section h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+        a {
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: none !important;
+        }
+        .form-section h3:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+        .project-entry {
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        .project-entry:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        .form-control {
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            border: 1px solid #ced4da;
+        }
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.6rem 1.5rem;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            padding: 0.6rem 1.5rem;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            border-radius: 6px;
+        }
+        .section-icon {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1 class="text-center mb-2">Portfolio Template Generator</h1>
+            <p class="text-center mb-0">Create a professional portfolio website in minutes</p>
+        </div>
+    </div>
+    
+    <div class="container pb-5">
+        <div class="form-container">
+            <ul class="nav nav-tabs mb-4" id="generatorTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="form-tab" data-bs-toggle="tab" data-bs-target="#form-tab-pane" type="button" role="tab" aria-controls="form-tab-pane" aria-selected="true">Form Input</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="json-tab" data-bs-toggle="tab" data-bs-target="#json-tab-pane" type="button" role="tab" aria-controls="json-tab-pane" aria-selected="false">JSON Batch Upload</button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="generatorTabsContent">
+                <div class="tab-pane fade show active" id="form-tab-pane" role="tabpanel" aria-labelledby="form-tab" tabindex="0">
+        <form id="portfolioForm" class="needs-validation" novalidate>
+        <form id="portfolioForm" class="needs-validation" novalidate>
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h3><i class="bi bi-person-circle section-icon"></i>Personal Information</h3>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">Professional Title</label>
+                    <input type="text" class="form-control" id="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bio" class="form-label">Bio</label>
+                    <textarea class="form-control" id="bio" rows="3" required></textarea>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="form-section">
+                <h3><i class="bi bi-tools section-icon"></i>Skills</h3>
+                <div class="mb-3">
+                    <label for="skills" class="form-label">Skills (comma-separated)</label>
+                    <input type="text" class="form-control" id="skills" placeholder="e.g., HTML, CSS, JavaScript" required>
+                </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="form-section">
+                <h3><i class="bi bi-briefcase section-icon"></i>Projects</h3>
+                <div id="projectsContainer">
+                    <div class="project-entry">
+                        <div class="mb-3">
+                            <label class="form-label">Project Name</label>
+                            <input type="text" class="form-control project-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Technologies Used</label>
+                            <input type="text" class="form-control project-tech" placeholder="e.g., React, Node.js" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary mt-2" id="addProject">Add Another Project</button>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="form-section">
+                <h3><i class="bi bi-envelope section-icon"></i>Contact Information</h3>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="linkedin" class="form-label">LinkedIn Profile</label>
+                    <input type="url" class="form-control" id="linkedin">
+                </div>
+                <div class="mb-3">
+                    <label for="github" class="form-label">GitHub Profile</label>
+                    <input type="url" class="form-control" id="github">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary"><i class="bi bi-file-earmark-code me-2"></i>Generate Portfolio</button>
+        </form>
+        </div>
+                <div class="tab-pane fade" id="json-tab-pane" role="tabpanel" aria-labelledby="json-tab" tabindex="0">
+                    <form id="jsonUploadForm">
+                        <div class="mb-3">
+                            <label for="jsonFile" class="form-label">Upload JSON File</label>
+                            <input class="form-control" type="file" id="jsonFile" accept=".json" required>
+                            <div class="invalid-feedback">Please upload a valid JSON file.</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-upload me-2"></i>Upload and Process</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="script.js"></script>
+</body>
+</html>
